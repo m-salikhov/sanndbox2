@@ -9,5 +9,13 @@ export class Car {
   @Column()
   model: string;
   @Column()
+  type: string;
+  @Column()
   number: string;
+  @Column()
+  price: number;
+  @Column()
+  city: string;
+  @Column()
+  photo: string;
 }

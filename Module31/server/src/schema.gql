@@ -1,0 +1,39 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Car {
+  _id: String!
+  brand: String!
+  model: String!
+  type: String!
+  number: String!
+  price: Int!
+  city: String!
+  photo: String!
+}
+
+type Query {
+  cars: [Car!]!
+  someCars(findCarsDto: FindCarsDto!): [Car!]!
+  getOneCar(id: String!): Car!
+}
+
+input FindCarsDto {
+  city: String!
+  type: String!
+}
+
+type Mutation {
+  createCar(carDto: CarDto!): Car!
+}
+
+input CarDto {
+  brand: String!
+  model: String!
+  number: String!
+  price: Float!
+  city: String!
+  photo: String!
+  type: String!
+}

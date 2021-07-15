@@ -3,4 +3,8 @@ export class CarDto {
   brand: string;
   model: string;
   number: string;
+  price: number;
+  city: string;
+  photo: string;
+  type: string;
 }
