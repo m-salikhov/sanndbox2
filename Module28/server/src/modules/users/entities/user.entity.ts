@@ -1,12 +1,12 @@
-import { Column, Entity, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, Index, ObjectIdColumn, Unique } from 'typeorm';
 
 @Entity()
 export class User {
   @ObjectIdColumn()
   _id: string;
   @Column()
-  name: string;
-  @Column()
+  username!: string;
+  @Column({ default: '01.01.2001' })
   bdayDate: string;
   @Column()
   email: string;
@@ -26,6 +26,4 @@ export class User {
   dateLicense: string;
   @Column()
   pass: string;
-  @Column()
-  passRepeat: string;
 }

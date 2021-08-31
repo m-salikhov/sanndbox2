@@ -14,23 +14,26 @@ export default function ValForm() {
 	function onSubmit(e) {
 		e.preventDefault();
 		axios
-			.post('/val', {
+			.post('/login', {
 				email,
 				pass,
 			})
 			.then((res) => res.data)
 			.then((data) => {
-				if (data.accessToken) {
-					localStorage.setItem('accessToken', data.accessToken);
-					localStorage.setItem('refreshToken', data.refreshToken);
+				if (data.access_token) {
+					localStorage.setItem('access_token', data.access_token);
 
 					setIsLog(true);
-				} else setMessage(data);
+				}
+			})
+			.catch((error) => {
+				setMessage(error.message);
 			});
 	}
 	if (isLog) {
 		return <Redirect to='/' />;
 	}
+	console.log(message);
 
 	return (
 		<div className='val-form__wrapper'>

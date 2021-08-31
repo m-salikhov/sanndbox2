@@ -5,6 +5,7 @@ import { CarsModule } from './modules/cars/cars.module';
 import config from './config/keys';
 import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
+import { OwnersModule } from './modules/owners/owners.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { GraphQLModule } from '@nestjs/graphql';
     }),
     UsersModule,
     CarsModule,
+    OwnersModule,
   ],
 })
 export class AppModule {}

@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  _id: String!
+  username: String!
+  bdayDate: String!
+  email: String!
+  phone: String!
+  passport: String!
+  passDate: String!
+  passOrg: String
+  passOrgCode: String!
+  licenseNumber: String!
+  dateLicense: String!
+  pass: String!
+  passRepeat: String!
+}
+
 type Car {
   _id: String!
   brand: String!
@@ -13,10 +29,25 @@ type Car {
   photo: String!
 }
 
+type Owner {
+  _id: String!
+  name: String!
+  bdayDate: String!
+  email: String!
+  phone: String!
+  passport: String!
+  pass: String!
+  passRepeat: String!
+}
+
 type Query {
+  users: [User!]!
+  getOneUser(id: String!): User!
   cars: [Car!]!
   someCars(findCarsDto: FindCarsDto!): [Car!]!
   getOneCar(id: String!): Car!
+  owners: [Owner!]!
+  getOneOwner(id: String!): Owner!
 }
 
 input FindCarsDto {
@@ -25,7 +56,24 @@ input FindCarsDto {
 }
 
 type Mutation {
+  createUser(userDto: UserDto!): User!
   createCar(carDto: CarDto!): Car!
+  createOwner(ownerDto: OwnerDto!): Owner!
+}
+
+input UserDto {
+  username: String!
+  bdayDate: String!
+  email: String!
+  phone: String!
+  passport: String!
+  passDate: String!
+  passOrg: String
+  passOrgCode: String!
+  licenseNumber: String!
+  dateLicense: String!
+  pass: String!
+  passRepeat: String!
 }
 
 input CarDto {
@@ -36,4 +84,14 @@ input CarDto {
   city: String!
   photo: String!
   type: String!
+}
+
+input OwnerDto {
+  name: String!
+  bdayDate: String!
+  email: String!
+  phone: String!
+  passport: String!
+  pass: String!
+  passRepeat: String!
 }

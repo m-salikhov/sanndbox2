@@ -1,53 +1,53 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { CREATE_USER_REQUEST } from '../../utils/gql-req';
 
 export default function AboutUser() {
-	const [name, setName] = useState('');
-	const [bdayDate, setBdayDate] = useState('');
-	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
-	const [passport, setPassport] = useState('');
-	const [passDate, setPassDate] = useState('');
-	const [passOrg, setPassOrg] = useState('');
-	const [passOrgCode, setPassOrgCode] = useState('');
-	const [licenseNumber, setLicenseNumber] = useState('');
-	const [dateLicense, setDateLicense] = useState('');
-	const [pass, setPass] = useState('');
-	const [passRepeat, setPassRepeat] = useState('');
+	const [inputUser, setInputUser] = useState({
+		username: '',
+		bdayDate: '',
+		email: '',
+		phone: '',
+		passport: '',
+		passDate: '',
+		passOrg: '',
+		passOrgCode: '',
+		licenseNumber: '',
+		dateLicense: '',
+		pass: '',
+		passRepeat: '',
+	});
 
 	const [message, setMessage] = useState('');
 
-	function onSubmit(e) {
-		e.preventDefault();
-		axios
-			.post('/users', {
-				name,
-				bdayDate,
-				email,
-				phone,
-				passport,
-				passDate,
-				passOrg,
-				passOrgCode,
-				licenseNumber,
-				dateLicense,
-				pass,
-				passRepeat,
-			})
-			.then((res) => res.data)
-			.then((data) => setMessage(data));
-	}
+	const onChange = (e) => {
+		setInputUser({ ...inputUser, [e.target.name]: e.target.value });
+	};
+
+	const [createNewUser] = useMutation(CREATE_USER_REQUEST, {
+		variables: { userInput: inputUser },
+	});
+
+	console.log(inputUser);
+
+	const onSubmit = (event) => {
+		event.preventDefault();
+		if (inputUser.pass !== inputUser.passRepeat)
+			return setMessage('Пароль не совпадает');
+		createNewUser();
+	};
 
 	return (
 		<>
-			<form>
+			<form onSubmit={onSubmit}>
 				<h2>Информация о вас</h2>
 				<label>
 					ФИО{' '}
 					<input
 						className='name'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
+						name='username'
+						onChange={onChange}
+						value={inputUser.username}
 						placeholder='ФИО полностью'
 						type='text'
 					/>
@@ -57,8 +57,9 @@ export default function AboutUser() {
 					<div className='date'>
 						<input
 							className='dateBirthday'
-							value={bdayDate}
-							onChange={(e) => setBdayDate(e.target.value)}
+							name='bdayDate'
+							onChange={onChange}
+							value={inputUser.bdayDate}
 							type='date'
 						/>
 					</div>
@@ -68,8 +69,9 @@ export default function AboutUser() {
 					<input
 						className='email'
 						placeholder='mail@example.com'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						name='email'
+						onChange={onChange}
+						value={inputUser.email}
 						type='email'
 					/>
 				</label>
@@ -78,8 +80,9 @@ export default function AboutUser() {
 					<input
 						className='phone'
 						placeholder='+7 900 000-00-00'
-						value={phone}
-						onChange={(e) => setPhone(e.target.value)}
+						name='phone'
+						onChange={onChange}
+						value={inputUser.phone}
 						type='tel'
 					/>
 				</label>
@@ -89,8 +92,9 @@ export default function AboutUser() {
 					<input
 						className='series'
 						placeholder='0000 000000'
-						value={passport}
-						onChange={(e) => setPassport(e.target.value)}
+						name='passport'
+						onChange={onChange}
+						value={inputUser.passport}
 						type='text'
 					/>
 				</label>
@@ -99,8 +103,9 @@ export default function AboutUser() {
 					<div className='date'>
 						<input
 							className='datePassport'
-							value={passDate}
-							onChange={(e) => setPassDate(e.target.value)}
+							name='passDate'
+							onChange={onChange}
+							value={inputUser.passDate}
 							type='date'
 						/>
 					</div>
@@ -110,8 +115,9 @@ export default function AboutUser() {
 					<input
 						className='issued'
 						placeholder='Название органа выдавшего паспорт'
-						value={passOrg}
-						onChange={(e) => setPassOrg(e.target.value)}
+						name='passOrg'
+						onChange={onChange}
+						value={inputUser.passOrg}
 						type='text'
 					/>
 				</label>
@@ -120,8 +126,9 @@ export default function AboutUser() {
 					<input
 						className='codeIssued'
 						placeholder='000-000'
-						value={passOrgCode}
-						onChange={(e) => setPassOrgCode(e.target.value)}
+						name='passOrgCode'
+						onChange={onChange}
+						value={inputUser.passOrgCode}
 						type='text'
 					/>
 				</label>
@@ -131,8 +138,9 @@ export default function AboutUser() {
 					<input
 						className='licenseNumber'
 						placeholder='0000 000000'
-						value={licenseNumber}
-						onChange={(e) => setLicenseNumber(e.target.value)}
+						name='licenseNumber'
+						onChange={onChange}
+						value={inputUser.licenseNumber}
 						type='text'
 					/>
 				</label>
@@ -141,8 +149,9 @@ export default function AboutUser() {
 					<div className='date'>
 						<input
 							className='dateLicense'
-							value={dateLicense}
-							onChange={(e) => setDateLicense(e.target.value)}
+							name='dateLicense'
+							onChange={onChange}
+							value={inputUser.dateLicense}
 							type='date'
 						/>
 					</div>
@@ -152,8 +161,9 @@ export default function AboutUser() {
 					Придумайте пароль
 					<input
 						className='pass'
-						value={pass}
-						onChange={(e) => setPass(e.target.value)}
+						name='pass'
+						onChange={onChange}
+						value={inputUser.pass}
 						type='password'
 					/>
 				</label>
@@ -161,14 +171,15 @@ export default function AboutUser() {
 					Повторите пароль{' '}
 					<input
 						className='passRepeat'
-						value={passRepeat}
-						onChange={(e) => setPassRepeat(e.target.value)}
+						name='passRepeat'
+						onChange={onChange}
+						value={inputUser.passRepeat}
 						type='password'
 					/>
 				</label>
 				<div className='rectangle'>
-					<h2 style={{ color: 'red' }}>{message.name}</h2>
-					<button className='subButton' type='submit' onClick={onSubmit}>
+					<h2 style={{ color: 'red' }}>{message}</h2>
+					<button className='subButton' type='submit'>
 						Продолжить
 					</button>
 				</div>

@@ -1,18 +1,19 @@
-import React from 'react';
 import RegForm from './RegForm/RegForm';
 import Main from './Main/Main';
 import QApage from './QApage/QApage';
 import ValForm from './ValForm/ValForm';
 import RecPass from './RecPass/RecPass';
+import { Cars } from './Cars';
 
 import '../styles/style.scss';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Cars } from './Cars';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from '../utils/apollo-client';
 
 function App() {
 	return (
-		<>
+		<ApolloProvider client={apolloClient}>
 			<Router>
 				<Switch>
 					<Route exact path='/' component={Main} />
@@ -23,7 +24,7 @@ function App() {
 					<Route path='/cars' component={Cars} />
 				</Switch>
 			</Router>
-		</>
+		</ApolloProvider>
 	);
 }
 

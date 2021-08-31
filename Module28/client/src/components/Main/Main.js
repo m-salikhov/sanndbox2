@@ -7,6 +7,7 @@ import img_main_1 from './images/main_1.svg';
 import img_main_2 from './images/main_2.svg';
 import img_main_3 from './images/main_3.svg';
 import img_main_4 from './images/main_4.svg';
+import { Link } from 'react-router-dom';
 
 function Main() {
 	return (
@@ -21,7 +22,7 @@ function Main() {
 						Будьте всегда за рулём во время путешествий и командировок.
 					</div>
 					<button className='carsharing__btn'>
-						<a href='/reg'>Зарегистрироваться</a>
+						<Link to='/reg'>Зарегистрироваться</Link>
 					</button>
 				</section>
 				<section className='pluses'>
@@ -62,6 +63,9 @@ function Main() {
 						</div>
 					</div>
 				</section>
+				<button className='cars__btn'>
+					<Link to='/cars'>Выбрать автомобиль</Link>
+				</button>
 			</main>
 
 			<Footer />
@@ -70,41 +74,3 @@ function Main() {
 }
 
 export default Main;
-
-// const dispatch = useDispatch();
-
-// let users = useSelector((state) => state.userReducer.users);
-
-// <p>Тут будет стартовая страница</p>
-
-// <div>
-// 	<button>
-// 		<a href='/reg'>Зарегистрироваться</a>
-// 	</button>
-// </div>
-
-// {/* Redux */}
-// <button
-// 	onClick={() => {
-// 		dispatch(fetchUsers());
-// 	}}
-// >
-// 	{' '}
-// 	Все пользователи{' '}
-// </button>
-
-// {users.length > 0 ? (
-// 	<div>
-// 		{users.map((user) => (
-// 			<div key={user._id}>
-// 				{' '}
-// 				<h4> {user.name} </h4>{' '}
-// 			</div>
-// 		))}{' '}
-// 	</div>
-// ) : (
-// 	<div>
-// 		{' '}
-// 		<h2> Клиентов нет </h2>{' '}
-// 	</div>
-// )}

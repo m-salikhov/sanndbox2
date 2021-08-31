@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { getMongoRepository } from 'typeorm';
-
 import { v4 as uuid } from 'uuid';
 import { CarDto } from '../dto/car.dto';
 import { FindCarsDto } from '../dto/find-car.dto';
