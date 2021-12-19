@@ -12,17 +12,25 @@ const typeorm_1 = require("typeorm");
 const user_entity_1 = require("../entities/user.entity");
 const uuid_1 = require("uuid");
 const bcrypt = require("bcrypt");
+const userVK_entity_1 = require("../entities/userVK.entity");
 let UsersRepo = class UsersRepo {
-    async createUser(userDto) {
+    async createUser(user) {
         const repository = typeorm_1.getMongoRepository(user_entity_1.User);
-        const userCheck = await repository.findOne({ email: userDto.email });
+        const userCheck = await repository.findOne({ email: user.email });
         if (userCheck)
             throw new common_1.ConflictException('Email уже существует в системе');
-        const saltOrRounds = 10;
-        const password = userDto.pass;
-        const hash = await bcrypt.hash(password, saltOrRounds);
-        const newUser = Object.assign(Object.assign({ _id: uuid_1.v4() }, userDto), { pass: hash });
+        const password = user.pass;
+        const hash = await bcrypt.hash(password, 10);
+        const newUser = Object.assign(Object.assign({ _id: uuid_1.v4() }, user), { pass: hash });
         return await repository.save(newUser);
+    }
+    async loginUserVK(userVK) {
+        const repository = typeorm_1.getMongoRepository(userVK_entity_1.UserVK);
+        const user = await repository.findOne({ uid: userVK.uid });
+        if (user)
+            return user;
+        const newUserVK = Object.assign({ _id: uuid_1.v4() }, userVK);
+        return await repository.save(newUserVK);
     }
     async getAllUsers() {
         const repository = typeorm_1.getMongoRepository(user_entity_1.User);
@@ -30,6 +38,10 @@ let UsersRepo = class UsersRepo {
     }
     async getOneUser(id) {
         const repository = typeorm_1.getMongoRepository(user_entity_1.User);
+        return await repository.findOne({ _id: id });
+    }
+    async getOneUserVK(id) {
+        const repository = typeorm_1.getMongoRepository(userVK_entity_1.UserVK);
         return await repository.findOne({ _id: id });
     }
     async getOneByEmail(email) {

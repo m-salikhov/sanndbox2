@@ -1,5 +1,6 @@
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { UserVK } from '../users/entities/userVK.entity';
 export declare class AuthService {
     private usersService;
     private jwtService;
@@ -10,6 +11,13 @@ export declare class AuthService {
         payload: {
             username: any;
             sub: any;
+        };
+    }>;
+    loginVK(userVK: UserVK): Promise<{
+        access_token: string;
+        payload: {
+            username: string;
+            sub: string;
         };
     }>;
 }

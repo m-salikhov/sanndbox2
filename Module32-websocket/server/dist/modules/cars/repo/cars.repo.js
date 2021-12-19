@@ -34,6 +34,10 @@ let CarsRepo = class CarsRepo {
             },
         });
     }
+    async updateCar(id, updateCarDto) {
+        const repository = typeorm_1.getMongoRepository(car_entity_1.Car);
+        return await repository.findOneAndUpdate({ _id: id }, { $set: { bookedInfo: updateCarDto } }, { returnOriginal: false });
+    }
 };
 CarsRepo = __decorate([
     common_1.Injectable()

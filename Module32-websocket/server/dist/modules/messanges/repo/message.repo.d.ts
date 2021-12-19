@@ -4,6 +4,10 @@ import { UsersService } from 'src/modules/users/users.service';
 export declare class MessagesRepo {
     private usersService;
     constructor(usersService: UsersService);
-    getAll(user: any): Promise<Message[]>;
+    getAll(): Promise<Message[]>;
     createMessage(message: CreateMessageDto, user: any): Promise<Message>;
+    getAllMessagesById(user: any): Promise<Message[]>;
+    deleteAll(): Promise<{
+        msg: string;
+    }>;
 }

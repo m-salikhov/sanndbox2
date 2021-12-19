@@ -16,8 +16,8 @@ let CarsService = class CarsService {
     constructor(carsRepo) {
         this.carsRepo = carsRepo;
     }
-    async createCar(car) {
-        return await this.carsRepo.createCar(car);
+    async createCar(createCarDto) {
+        return await this.carsRepo.createCar(createCarDto);
     }
     async findAll() {
         return await this.carsRepo.getAll();
@@ -27,6 +27,9 @@ let CarsService = class CarsService {
     }
     async getSomeCars(findCarsDto) {
         return await this.carsRepo.getSomeCars(findCarsDto);
+    }
+    async updateCar(id, updateCarDto) {
+        return await this.carsRepo.updateCar(id, updateCarDto);
     }
 };
 CarsService = __decorate([

@@ -18,11 +18,11 @@ export class MessagesGateway
     string,
     { username: string; sub: string; socket: Socket }
   >();
+
   private logger: Logger = new Logger('MessageGateway');
 
   constructor(private readonly messangesService: MessangesService) {
     this.messangesService.attachSender((message) => {
-      console.log(message);
       this.clientSocketMap.forEach(({ username, socket }) => {
         if (
           username === message.user.username ||
@@ -39,8 +39,6 @@ export class MessagesGateway
     socket: Socket,
     payload: { accessToken: string },
   ): Promise<WsResponse<{ success: boolean; message?: string }>> {
-    // console.log('payload: ', payload);
-
     try {
       const { username, sub, exp } = jwt.verify(
         payload?.accessToken,
@@ -76,18 +74,15 @@ export class MessagesGateway
         },
       };
     }
-    // console.log(this.clientSocketMap);
     return {
       event: 'auth-ed',
       data: { success: true },
     };
   }
   handleConnection(socket: Socket) {
-    // console.log(this.clientSocketMap.size);
-    console.log(socket.id);
-
-    // console.log(this.clientSocketMap);
-    const values: any = [...this.clientSocketMap.values()];
+    const values: { username: string; sub: string; socket: Socket }[] = [
+      ...this.clientSocketMap.values(),
+    ];
     const onUsers = values.map((elem) => {
       const newElem = { username: elem.username, sub: elem.sub };
       return newElem;
@@ -96,12 +91,22 @@ export class MessagesGateway
   }
 
   handleDisconnect(socket: Socket) {
-    const { username, sub } = this.clientSocketMap.get(socket.id);
-    const deletedUser = [{ username, sub }];
-    this.clientSocketMap.delete(socket.id);
-    this.logger.warn(`Disconnected client: ${socket.id}`, ' MessageGateway');
-    this.clientSocketMap.forEach(({ socket }) => {
-      socket.emit('disconnectedUser', deletedUser);
-    });
+    try {
+      const { username, sub } = this.clientSocketMap.get(socket.id);
+      const deletedUser = [{ username, sub }];
+      this.clientSocketMap.delete(socket.id);
+      this.logger.warn(`Disconnected client: ${socket.id}`, ' MessageGateway');
+      this.clientSocketMap.forEach(({ socket }) => {
+        socket.emit('disconnectedUser', deletedUser);
+      });
+    } catch (error) {
+      return {
+        event: 'auth-ed',
+        data: {
+          success: false,
+          message: error.message,
+        },
+      };
+    }
   }
 }

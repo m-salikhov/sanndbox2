@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/entities/user.entity';
+import { UserDto } from '../users/DTO/user.dto';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity';
 import { MessagesRepo } from './repo/message.repo';
@@ -14,11 +14,19 @@ export class MessangesService {
     this.push = sender;
   }
 
-  async findAll(user) {
-    return await this.messagesRepo.getAll(user);
+  async findAll() {
+    return await this.messagesRepo.getAll();
   }
 
-  async createMessage(createMessageDto: CreateMessageDto, user: User) {
+  async createMessage(createMessageDto: CreateMessageDto, user: UserDto) {
     return await this.messagesRepo.createMessage(createMessageDto, user);
+  }
+
+  async messagesById(user: UserDto) {
+    return await this.messagesRepo.getAllMessagesById(user);
+  }
+
+  async deleteAll() {
+    return await this.messagesRepo.deleteAll();
   }
 }

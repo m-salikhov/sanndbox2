@@ -13,11 +13,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarsController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 const cars_service_1 = require("./cars.service");
 const car_dto_1 = require("./dto/car.dto");
 const find_car_dto_1 = require("./dto/find-car.dto");
+const car_entity_1 = require("./entities/car.entity");
 let CarsController = class CarsController {
     constructor(carsService) {
         this.carsService = carsService;
@@ -25,46 +28,89 @@ let CarsController = class CarsController {
     findAll() {
         return this.carsService.findAll();
     }
-    createNewUser(createCarDto) {
+    createNewCar(createCarDto) {
         return this.carsService.createCar(createCarDto);
     }
-    getOne(params) {
-        return this.carsService.getOne(params.id);
+    getOne(id) {
+        return this.carsService.getOne(id);
     }
     getSomeCars(findCarsDto) {
         return this.carsService.getSomeCars(findCarsDto);
     }
+    updateCar(id, updateCarDto) {
+        console.log(id);
+        console.log(updateCarDto);
+        return this.carsService.updateCar(id, updateCarDto);
+    }
 };
 __decorate([
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiOkResponse({
+        description: 'Get All Cars succesfully',
+        type: [car_entity_1.Car],
+    }),
+    swagger_1.ApiInternalServerErrorResponse({
+        description: 'Iternal server error',
+    }),
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     common_1.Get(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/car.entity").Car] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CarsController.prototype, "findAll", null);
 __decorate([
+    swagger_1.ApiOkResponse({
+        description: 'Post Car succesfully',
+        type: car_entity_1.Car,
+    }),
     common_1.Post(),
+    swagger_1.ApiBody({ type: car_dto_1.CarDto }),
+    openapi.ApiResponse({ status: 201, type: require("./entities/car.entity").Car }),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [car_dto_1.CarDto]),
     __metadata("design:returntype", Promise)
-], CarsController.prototype, "createNewUser", null);
+], CarsController.prototype, "createNewCar", null);
 __decorate([
+    swagger_1.ApiOkResponse({
+        description: 'Get Car succesfully',
+        type: car_entity_1.Car,
+    }),
+    swagger_1.ApiInternalServerErrorResponse({
+        description: 'Iternal server error',
+    }),
     common_1.Get(':id'),
-    __param(0, common_1.Param()),
+    openapi.ApiResponse({ status: 200, type: require("./entities/car.entity").Car }),
+    __param(0, common_1.Param('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], CarsController.prototype, "getOne", null);
 __decorate([
+    swagger_1.ApiBearerAuth(),
+    swagger_1.ApiOkResponse({
+        description: 'Get some cars succesfully',
+        type: [car_entity_1.Car],
+    }),
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     common_1.Post('/somecars'),
+    openapi.ApiResponse({ status: 201, type: [require("./entities/car.entity").Car] }),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [find_car_dto_1.FindCarsDto]),
     __metadata("design:returntype", Promise)
 ], CarsController.prototype, "getSomeCars", null);
+__decorate([
+    common_1.Put(':id'),
+    openapi.ApiResponse({ status: 200, type: Object }),
+    __param(0, common_1.Param('id')), __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, car_dto_1.CarDto]),
+    __metadata("design:returntype", void 0)
+], CarsController.prototype, "updateCar", null);
 CarsController = __decorate([
+    swagger_1.ApiTags('cars'),
     common_1.Controller('cars'),
     __metadata("design:paramtypes", [cars_service_1.CarsService])
 ], CarsController);

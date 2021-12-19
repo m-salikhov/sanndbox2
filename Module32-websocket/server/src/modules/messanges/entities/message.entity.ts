@@ -1,14 +1,20 @@
-import { User } from 'src/modules/users/entities/user.entity';
-import { Column, Entity, ManyToOne, ObjectIdColumn } from 'typeorm';
+import { Column, Entity, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Message {
   @ObjectIdColumn()
   _id: string;
-  @ManyToOne(() => User)
-  user: User;
-  @ManyToOne(() => User)
-  toUser: User;
+  @Column()
+  user: {
+    _id: string;
+    username: string;
+  };
+  @Column()
+  toUser: {
+    _id: string;
+    username: string;
+    email: string;
+  };
   @Column()
   body: string;
   @Column()

@@ -11,4 +11,8 @@ export declare class User {
     licenseNumber: string;
     dateLicense: string;
     pass: string;
+    cardNumber?: string;
+    cardName?: string;
+    cardExpiry?: string;
+    cardCvc?: string;
 }

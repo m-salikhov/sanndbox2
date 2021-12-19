@@ -20,11 +20,11 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    findAllUsers() {
-        return this.usersService.findAllUsers();
+    getAllUsers() {
+        return this.usersService.getAllUsers();
     }
-    createNewUser(userDto) {
-        return this.usersService.createUser(userDto);
+    createUser(user) {
+        return this.usersService.createUser(user);
     }
     getOneUser(params) {
         return this.usersService.getOneUser(params.id);
@@ -38,14 +38,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "findAllUsers", null);
+], UsersController.prototype, "getAllUsers", null);
 __decorate([
     common_1.Post(),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.UserDto]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "createNewUser", null);
+], UsersController.prototype, "createUser", null);
 __decorate([
     common_1.Get(':id'),
     __param(0, common_1.Param()),

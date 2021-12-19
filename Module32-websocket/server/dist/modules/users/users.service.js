@@ -19,11 +19,17 @@ let UsersService = class UsersService {
     async createUser(user) {
         return await this.usersRepo.createUser(user);
     }
-    async findAllUsers() {
+    async loginUserVK(user) {
+        return await this.usersRepo.loginUserVK(user);
+    }
+    async getAllUsers() {
         return await this.usersRepo.getAllUsers();
     }
     async getOneUser(id) {
         return await this.usersRepo.getOneUser(id);
+    }
+    async getOneUserVK(id) {
+        return await this.usersRepo.getOneUserVK(id);
     }
     async getOneByEmail(email) {
         return await this.usersRepo.getOneByEmail(email);

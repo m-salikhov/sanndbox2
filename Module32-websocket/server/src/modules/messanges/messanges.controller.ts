@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity';
@@ -10,11 +18,8 @@ export class MessangesController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  messages(@Req() req: any) {
-    const user = req.user;
-    console.log(user);
-
-    return this.messangesService.findAll(user);
+  messages(): Promise<Message[]> {
+    return this.messangesService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -23,15 +28,24 @@ export class MessangesController {
     @Body() createMessageDto: CreateMessageDto,
     @Req() req: any,
   ): Promise<Message> {
-    const user = req.user;
-    // return this.messangesService.createMessage(message, user);
     const message = await this.messangesService.createMessage(
       createMessageDto,
-      user,
+      req.user,
     );
 
     this.messangesService.push(message);
 
     return message;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/messagesById')
+  messagesById(@Req() req: any): Promise<Message[]> {
+    return this.messangesService.messagesById(req.user);
+  }
+
+  @Delete()
+  deleteAll() {
+    return this.messangesService.deleteAll();
   }
 }

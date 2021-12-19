@@ -8,29 +8,26 @@ import { UsersService } from 'src/modules/users/users.service';
 @Injectable()
 export class MessagesRepo {
   constructor(private usersService: UsersService) {}
-  async getAll(user) {
+  async getAll() {
     const repository = getMongoRepository(Message);
-    const author = await this.usersService.getOneUser(user.userId);
-    const { pass, ...authorMessage } = author;
-    console.log(authorMessage);
-    if (!authorMessage) {
-      throw new HttpException(`User not found`, HttpStatus.NOT_FOUND);
-    }
+
     return await repository.find();
   }
 
   async createMessage(message: CreateMessageDto, user: any): Promise<Message> {
     const repository = getMongoRepository(Message);
-    const toUserFool = await this.usersService.getOneUser(message.toUserId);
+    const toUserFool =
+      (await this.usersService.getOneUser(message.toUserId)) ||
+      (await this.usersService.getOneUserVK(message.toUserId));
+
+    if (!toUserFool) {
+      throw new HttpException(`User not found`, HttpStatus.NOT_FOUND);
+    }
     const toUser = {
       _id: toUserFool._id,
       username: toUserFool.username,
-      email: toUserFool.email,
     };
-    if (!toUser) {
-      throw new HttpException(`User not found`, HttpStatus.NOT_FOUND);
-    }
-    console.log(user);
+
     const newMessage: Message = await repository.create({
       _id: uuid(),
       user,
@@ -38,5 +35,28 @@ export class MessagesRepo {
       body: message.body,
     });
     return await repository.save(newMessage);
+  }
+
+  async getAllMessagesById(user) {
+    const repository = getMongoRepository(Message);
+
+    return await repository.find({
+      where: {
+        $or: [
+          { 'user._id': { $eq: user._id } },
+          { 'toUser._id': { $eq: user._id } },
+        ],
+      },
+    });
+  }
+
+  async deleteAll() {
+    const repository = getMongoRepository(Message);
+    await repository.deleteMany({
+      'user.username': {
+        $in: ['Kolya', 'Olya', 'Ivan', 'Thomas Andersen', 'Максим Салихов'],
+      },
+    });
+    return { msg: 'Сообщения удалены' };
   }
 }

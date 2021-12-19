@@ -8,7 +8,9 @@
 .search {
 	margin-top: 20px;
 	display: flex;
-	justify-content: center;
+	// justify-content: center;
+	justify-content: space-around;
+
 	input {
 		font-weight: 500;
 		font-size: 16px;
@@ -35,5 +37,53 @@
 		width: 130px;
 		height: 45px;
 		margin-left: 20px;
+	}
+}
+
+.filtered-wrapper {
+	display: flex;
+	// justify-content: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	.card {
+		margin-top: 3em;
+		max-width: 40%;
+		min-width: 34%;
+		text-align: center;
+
+		border: 1px solid black;
+		.card-img {
+			display: flex;
+			img {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.card-info {
+	.card-text {
+		display: flex;
+		justify-content: space-around;
+		// padding-top: 2em;
+		margin-top: 20px;
+
+		h2 {
+			font-size: 28px;
+			font-weight: bold;
+		}
+	}
+	.card-booking {
+		margin: 20px 0px;
+		button {
+			font-weight: 500;
+			font-size: 20px;
+			line-height: 19px;
+			background: #61a199;
+			color: white;
+			width: 180px;
+			height: 45px;
+			margin-left: 20px;
+		}
 	}
 }

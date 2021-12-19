@@ -21,25 +21,27 @@ let MessangesController = class MessangesController {
     constructor(messangesService) {
         this.messangesService = messangesService;
     }
-    messages(req) {
-        const user = req.user;
-        console.log(user);
-        return this.messangesService.findAll(user);
+    messages() {
+        return this.messangesService.findAll();
     }
     async createMessage(createMessageDto, req) {
-        const user = req.user;
-        const message = await this.messangesService.createMessage(createMessageDto, user);
+        const message = await this.messangesService.createMessage(createMessageDto, req.user);
         this.messangesService.push(message);
         return message;
+    }
+    messagesById(req) {
+        return this.messangesService.messagesById(req.user);
+    }
+    deleteAll() {
+        return this.messangesService.deleteAll();
     }
 };
 __decorate([
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     common_1.Get(),
-    __param(0, common_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
 ], MessangesController.prototype, "messages", null);
 __decorate([
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
@@ -50,6 +52,20 @@ __decorate([
     __metadata("design:paramtypes", [create_message_dto_1.CreateMessageDto, Object]),
     __metadata("design:returntype", Promise)
 ], MessangesController.prototype, "createMessage", null);
+__decorate([
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
+    common_1.Get('/messagesById'),
+    __param(0, common_1.Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], MessangesController.prototype, "messagesById", null);
+__decorate([
+    common_1.Delete(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MessangesController.prototype, "deleteAll", null);
 MessangesController = __decorate([
     common_1.Controller('messages'),
     __metadata("design:paramtypes", [messanges_service_1.MessangesService])

@@ -12,10 +12,10 @@ const typeorm_1 = require("@nestjs/typeorm");
 const users_module_1 = require("./modules/users/users.module");
 const cars_module_1 = require("./modules/cars/cars.module");
 const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const auth_module_1 = require("./modules/auth/auth.module");
 const config_1 = require("@nestjs/config");
 const messanges_module_1 = require("./modules/messanges/messanges.module");
+const payments_module_1 = require("./modules/payments/payments.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,9 +33,10 @@ AppModule = __decorate([
             cars_module_1.CarsModule,
             auth_module_1.AuthModule,
             messanges_module_1.MessangesModule,
+            payments_module_1.PaymentsModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [],
     })
 ], AppModule);
 exports.AppModule = AppModule;

@@ -13,5 +13,11 @@ export declare class MessagesGateway implements OnGatewayDisconnect, OnGatewayCo
         message?: string;
     }>>;
     handleConnection(socket: Socket): void;
-    handleDisconnect(socket: Socket): void;
+    handleDisconnect(socket: Socket): {
+        event: string;
+        data: {
+            success: boolean;
+            message: any;
+        };
+    };
 }

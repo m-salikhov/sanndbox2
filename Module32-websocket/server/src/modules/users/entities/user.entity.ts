@@ -26,4 +26,12 @@ export class User {
   dateLicense: string;
   @Column()
   pass: string;
+  @Column()
+  cardNumber?: string;
+  @Column()
+  cardName?: string;
+  @Column()
+  cardExpiry?: string;
+  @Column()
+  cardCvc?: string;
 }

@@ -1,0 +1,19 @@
+.payment {
+	padding-top: 1rem;
+}
+
+label {
+	display: flex;
+	justify-content: center;
+	button {
+		margin-right: 10px;
+		align-items: flex-start;
+	}
+	.amount {
+		border: 1px solid rgba(27, 27, 27, 0.4);
+		border-radius: 6px;
+		text-align: center;
+
+		max-width: 60px;
+	}
+}

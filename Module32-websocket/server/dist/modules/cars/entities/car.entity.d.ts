@@ -7,4 +7,11 @@ export declare class Car {
     price: number;
     city: string;
     photo: string;
+    bookedInfo: {
+        booked: boolean;
+        date: {
+            startDate: string;
+            endDate: string;
+        };
+    };
 }

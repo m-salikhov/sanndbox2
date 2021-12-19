@@ -61,6 +61,22 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], User.prototype, "pass", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "cardNumber", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "cardName", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "cardExpiry", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "cardCvc", void 0);
 User = __decorate([
     typeorm_1.Entity()
 ], User);

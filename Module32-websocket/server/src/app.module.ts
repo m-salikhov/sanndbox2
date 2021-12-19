@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { CarsModule } from './modules/cars/cars.module';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MessangesModule } from './modules/messanges/messanges.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -22,8 +22,9 @@ import { MessangesModule } from './modules/messanges/messanges.module';
     CarsModule,
     AuthModule,
     MessangesModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

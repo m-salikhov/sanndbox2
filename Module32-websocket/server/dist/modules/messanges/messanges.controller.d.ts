@@ -4,6 +4,10 @@ import { MessangesService } from './messanges.service';
 export declare class MessangesController {
     private messangesService;
     constructor(messangesService: MessangesService);
-    messages(req: any): Promise<Message[]>;
+    messages(): Promise<Message[]>;
     createMessage(createMessageDto: CreateMessageDto, req: any): Promise<Message>;
+    messagesById(req: any): Promise<Message[]>;
+    deleteAll(): Promise<{
+        msg: string;
+    }>;
 }

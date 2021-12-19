@@ -21,7 +21,6 @@ let MessagesGateway = class MessagesGateway {
         this.clientSocketMap = new Map();
         this.logger = new common_1.Logger('MessageGateway');
         this.messangesService.attachSender((message) => {
-            console.log(message);
             this.clientSocketMap.forEach(({ username, socket }) => {
                 if (username === message.user.username ||
                     username === message.toUser.username) {
@@ -63,8 +62,9 @@ let MessagesGateway = class MessagesGateway {
         };
     }
     handleConnection(socket) {
-        console.log(socket.id);
-        const values = [...this.clientSocketMap.values()];
+        const values = [
+            ...this.clientSocketMap.values(),
+        ];
         const onUsers = values.map((elem) => {
             const newElem = { username: elem.username, sub: elem.sub };
             return newElem;
@@ -72,13 +72,24 @@ let MessagesGateway = class MessagesGateway {
         socket.emit('getAllConnectUsers', onUsers);
     }
     handleDisconnect(socket) {
-        const { username, sub } = this.clientSocketMap.get(socket.id);
-        const deletedUser = [{ username, sub }];
-        this.clientSocketMap.delete(socket.id);
-        this.logger.warn(`Disconnected client: ${socket.id}`, ' MessageGateway');
-        this.clientSocketMap.forEach(({ socket }) => {
-            socket.emit('disconnectedUser', deletedUser);
-        });
+        try {
+            const { username, sub } = this.clientSocketMap.get(socket.id);
+            const deletedUser = [{ username, sub }];
+            this.clientSocketMap.delete(socket.id);
+            this.logger.warn(`Disconnected client: ${socket.id}`, ' MessageGateway');
+            this.clientSocketMap.forEach(({ socket }) => {
+                socket.emit('disconnectedUser', deletedUser);
+            });
+        }
+        catch (error) {
+            return {
+                event: 'auth-ed',
+                data: {
+                    success: false,
+                    message: error.message,
+                },
+            };
+        }
     }
 };
 __decorate([

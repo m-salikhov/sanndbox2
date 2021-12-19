@@ -1,0 +1,29 @@
+{
+	"name": "z",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "jest",
+		"dev": "parcel index.html",
+		"build": "parcel build index.html"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.jsx?$": "babel-jest"
+		}
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.23.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.15.8",
+		"jest": "^27.2.5",
+		"parcel-bundler": "^1.12.5"
+	}
+}

@@ -25,4 +25,9 @@ export class UserDto {
   dateLicense: string;
   @Length(5, 15)
   pass: string;
+  cardNumber?: string;
+  cardName?: string;
+  cardExpiry?: string;
+  cardCvc?: string;
+  _id?: string;
 }

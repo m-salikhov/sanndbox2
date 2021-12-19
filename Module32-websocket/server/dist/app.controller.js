@@ -14,27 +14,24 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
 const auth_service_1 = require("./modules/auth/auth.service");
 const local_auth_guard_1 = require("./modules/auth/local-auth.guard");
+const userVK_dto_1 = require("./modules/users/DTO/userVK.dto");
+const users_service_1 = require("./modules/users/users.service");
 let AppController = class AppController {
-    constructor(appService, authService) {
-        this.appService = appService;
+    constructor(authService, usersService) {
         this.authService = authService;
-    }
-    getHello() {
-        return this.appService.getHello();
+        this.usersService = usersService;
     }
     async login(req) {
         return this.authService.login(req.user);
     }
+    async loginVK(userVK) {
+        console.log(userVK);
+        const user = await this.usersService.loginUserVK(userVK);
+        return this.authService.loginVK(user);
+    }
 };
-__decorate([
-    common_1.Get(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
 __decorate([
     common_1.UseGuards(local_auth_guard_1.LocalAuthGuard),
     common_1.Post('login'),
@@ -43,10 +40,17 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "login", null);
+__decorate([
+    common_1.Post('loginVK'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [userVK_dto_1.UserVKDto]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "loginVK", null);
 AppController = __decorate([
     common_1.Controller(),
-    __metadata("design:paramtypes", [app_service_1.AppService,
-        auth_service_1.AuthService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService,
+        users_service_1.UsersService])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

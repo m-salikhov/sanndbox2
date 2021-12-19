@@ -19,11 +19,17 @@ let MessangesService = class MessangesService {
     attachSender(sender) {
         this.push = sender;
     }
-    async findAll(user) {
-        return await this.messagesRepo.getAll(user);
+    async findAll() {
+        return await this.messagesRepo.getAll();
     }
     async createMessage(createMessageDto, user) {
         return await this.messagesRepo.createMessage(createMessageDto, user);
+    }
+    async messagesById(user) {
+        return await this.messagesRepo.getAllMessagesById(user);
+    }
+    async deleteAll() {
+        return await this.messagesRepo.deleteAll();
     }
 };
 MessangesService = __decorate([
