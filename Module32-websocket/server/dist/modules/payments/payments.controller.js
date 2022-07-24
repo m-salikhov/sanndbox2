@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentsController = void 0;
+const openapi = require("@nestjs/swagger");
 const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
@@ -86,6 +87,7 @@ let PaymentsController = class PaymentsController {
 };
 __decorate([
     common_1.Get('test'),
+    openapi.ApiResponse({ status: 200, type: Object }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -93,6 +95,7 @@ __decorate([
 __decorate([
     common_1.Post(),
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
+    openapi.ApiResponse({ status: 201 }),
     __param(0, common_1.Body()),
     __param(1, common_1.Req()),
     __metadata("design:type", Function),
@@ -102,6 +105,7 @@ __decorate([
 __decorate([
     common_1.Get('check-status'),
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, common_1.Query('paymentSessionKey')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

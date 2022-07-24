@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const user_dto_1 = require("./DTO/user.dto");
 const users_service_1 = require("./users.service");
@@ -35,12 +36,14 @@ let UsersController = class UsersController {
 };
 __decorate([
     common_1.Get(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/user.entity").User] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getAllUsers", null);
 __decorate([
     common_1.Post(),
+    openapi.ApiResponse({ status: 201, type: require("./entities/user.entity").User }),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_dto_1.UserDto]),
@@ -48,6 +51,7 @@ __decorate([
 ], UsersController.prototype, "createUser", null);
 __decorate([
     common_1.Get(':id'),
+    openapi.ApiResponse({ status: 200, type: require("./entities/user.entity").User }),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -55,6 +59,7 @@ __decorate([
 ], UsersController.prototype, "getOneUser", null);
 __decorate([
     common_1.Get('user/:email'),
+    openapi.ApiResponse({ status: 200, type: require("./entities/user.entity").User }),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UserDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { username: { required: true, type: () => String, minLength: 5 }, bdayDate: { required: true, type: () => String }, email: { required: true, type: () => String }, phone: { required: true, type: () => String }, passport: { required: true, type: () => String }, passDate: { required: true, type: () => String }, passOrg: { required: true, type: () => String }, passOrgCode: { required: true, type: () => String }, licenseNumber: { required: true, type: () => String }, dateLicense: { required: true, type: () => String }, pass: { required: true, type: () => String }, cardNumber: { required: false, type: () => String }, cardName: { required: false, type: () => String }, cardExpiry: { required: false, type: () => String }, cardCvc: { required: false, type: () => String }, _id: { required: false, type: () => String } };
+    }
 }
 __decorate([
     class_validator_1.MinLength(5, {

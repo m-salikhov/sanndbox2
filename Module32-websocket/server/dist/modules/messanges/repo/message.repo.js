@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const message_entity_1 = require("../entities/message.entity");
 const uuid_1 = require("uuid");
 const users_service_1 = require("../../users/users.service");
+const user_dto_1 = require("../../users/DTO/user.dto");
 let MessagesRepo = class MessagesRepo {
     constructor(usersService) {
         this.usersService = usersService;

@@ -38,8 +38,6 @@ let CarsController = class CarsController {
         return this.carsService.getSomeCars(findCarsDto);
     }
     updateCar(id, updateCarDto) {
-        console.log(id);
-        console.log(updateCarDto);
         return this.carsService.updateCar(id, updateCarDto);
     }
 };

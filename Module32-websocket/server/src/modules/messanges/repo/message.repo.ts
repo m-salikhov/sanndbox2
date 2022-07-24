@@ -4,6 +4,7 @@ import { Message } from '../entities/message.entity';
 import { v4 as uuid } from 'uuid';
 import { CreateMessageDto } from '../dto/create-message.dto';
 import { UsersService } from 'src/modules/users/users.service';
+import { UserDto } from 'src/modules/users/DTO/user.dto';
 
 @Injectable()
 export class MessagesRepo {
@@ -14,7 +15,10 @@ export class MessagesRepo {
     return await repository.find();
   }
 
-  async createMessage(message: CreateMessageDto, user: any): Promise<Message> {
+  async createMessage(
+    message: CreateMessageDto,
+    user: UserDto,
+  ): Promise<Message> {
     const repository = getMongoRepository(Message);
     const toUserFool =
       (await this.usersService.getOneUser(message.toUserId)) ||
@@ -37,7 +41,7 @@ export class MessagesRepo {
     return await repository.save(newMessage);
   }
 
-  async getAllMessagesById(user) {
+  async getAllMessagesById(user: UserDto) {
     const repository = getMongoRepository(Message);
 
     return await repository.find({

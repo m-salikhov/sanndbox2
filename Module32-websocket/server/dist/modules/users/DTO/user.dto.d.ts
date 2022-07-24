@@ -10,7 +10,7 @@ export declare class UserDto {
     licenseNumber: string;
     dateLicense: string;
     pass: string;
-    cardNumber: string;
+    cardNumber?: string;
     cardName?: string;
     cardExpiry?: string;
     cardCvc?: string;
